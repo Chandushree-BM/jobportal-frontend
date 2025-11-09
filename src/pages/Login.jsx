@@ -16,6 +16,7 @@ export default function Login() {
     setErr('')
     setLoading(true)
 
+
     try {
       await login(email, password)
       nav('/jobs')
@@ -33,18 +34,25 @@ export default function Login() {
         <h2>Sign in</h2>
         <div className="muted">Welcome back! Please enter your details.</div>
 
+        <h2>Sign in</h2>
+        <div className="muted">Welcome back! Please enter your details.</div>
+
         {err && (
+          <div className="badge" role="alert">
           <div className="badge" role="alert">
             ⚠ {err}
           </div>
         )}
 
+
         <form onSubmit={handle} className="form-grid">
+
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
               className="input"
+              id="email"
               id="email"
               type="email"
               placeholder="you@example.com"
@@ -56,6 +64,10 @@ export default function Login() {
           </div>
 
           <div className="form-group">
+            <label htmlFor="password">
+              Password
+            </label>
+
             <label htmlFor="password">
               Password
             </label>
@@ -78,8 +90,22 @@ export default function Login() {
             >
               {showPwd ? 'Hide' : 'Show'}
             </button>
+            />
+
+            <button
+              type="button"
+              className="btn ghost"
+              onClick={() => setShowPwd(!showPwd)}
+            >
+              {showPwd ? 'Hide' : 'Show'}
+            </button>
           </div>
 
+          <button
+            className="btn primary"
+            type="submit"
+            disabled={loading || !email || !password}
+          >
           <button
             className="btn primary"
             type="submit"
@@ -88,6 +114,8 @@ export default function Login() {
             {loading ? 'Signing in...' : 'Login'}
           </button>
         </form>
+
+        <div className="muted">
 
         <div className="muted">
           No account? <Link to="/register">Register</Link>
