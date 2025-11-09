@@ -1,14 +1,15 @@
-const updateProfile = async (fields) => {
-  const { data } = await api.put('/user/me', fields)
-  setUser(data)
-  localStorage.setItem('user', JSON.stringify(data))
-  return data
-}
-
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import api from '../api'
 
 const AuthCtx = createContext(null)
+
+export const useAuth = () => {
+  const context = useContext(AuthCtx)
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider')
+  }
+  return context
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user') || 'null'))
@@ -47,5 +48,3 @@ export function AuthProvider({ children }) {
     </AuthCtx.Provider>
   )
 }
-
-export const useAuth = () => useContext(AuthCtx)
